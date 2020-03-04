@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class Client
 {
-    final static int ServerPort = 1234;
+    final static int ServerPort = 5050;
 
     public static void main(String args[]) throws UnknownHostException, IOException
     {
