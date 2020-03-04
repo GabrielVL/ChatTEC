@@ -1,4 +1,4 @@
-package MultiClientChat;
+package Logic;
 
 // Java implementation for multithreaded chat client
 // Save file as Client.java
@@ -11,9 +11,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-public class Client
-{
+public class Client extends Web {
     final static int ServerPort = 5050;
+
 
     public static void main(String args[]) throws UnknownHostException, IOException
     {

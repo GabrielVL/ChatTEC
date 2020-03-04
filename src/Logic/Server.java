@@ -1,4 +1,4 @@
-package MultiClientChat;
+package Logic;
 
 // Java implementation of  Server side
 // It contains two classes : Server and ClientHandler
@@ -12,14 +12,10 @@ import java.net.Socket;
 import java.util.Vector;
 
 // Server class
-public class Server
-{
+public class Server extends Web{
 
     // Vector to store active clients
     static Vector<ClientHandler> ar = new Vector<>();
-
-    // counter for clients
-    static int i = 0;
 
     public static void main(String[] args) throws IOException
     {
@@ -27,14 +23,14 @@ public class Server
         ServerSocket ss = new ServerSocket(5050);
         System.out.println("listening on port: " + ss.getLocalPort());
 
-        Socket s;
+
 
         // running infinite loop for getting
         // client request
         while (true)
         {
             // Accept the incoming request
-            s = ss.accept();
+            Socket s = ss.accept();
 
             System.out.println("New client request received : " + s);
 
@@ -45,7 +41,7 @@ public class Server
             System.out.println("Creating a new handler for this client...");
 
             // Create a new handler object for handling this request.
-            ClientHandler mtch = new ClientHandler(s, dis, dos);
+            ClientHandler mtch = new ClientHandler(dis, dos);
 
             // Create a new Thread with this object.
             Thread t = new Thread(mtch);
@@ -57,11 +53,6 @@ public class Server
 
             // start the thread.
             t.start();
-
-            // increment i for new client.
-            // i is used for naming only, and can be replaced
-            // by any naming scheme
-            i++;
 
         }
     }

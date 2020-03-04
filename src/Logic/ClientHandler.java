@@ -1,27 +1,22 @@
-package MultiClientChat;
+package Logic;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
 // ClientHandler class
-class ClientHandler implements Runnable
-{
-    Scanner scn = new Scanner(System.in);
+class ClientHandler  extends Web implements Runnable {
     private String name;
     final DataInputStream dis;
     final DataOutputStream dos;
-    Socket s;
     boolean isloggedin;
 
     // constructor
-    public ClientHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
+    public ClientHandler(DataInputStream dis, DataOutputStream dos) {
         this.dis = dis;
         this.dos = dos;
-        this.s = s;
         this.isloggedin=true;
     }
 
