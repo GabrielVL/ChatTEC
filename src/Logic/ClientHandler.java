@@ -31,6 +31,7 @@ class ClientHandler  extends Web implements Runnable {
         String received;
 
         try {
+            dos.writeUTF("Escriba su nombre de usuario:");
             received = dis.readUTF();
             this.name = received;
         } catch (IOException e) {

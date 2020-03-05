@@ -12,7 +12,7 @@ import java.util.Vector;
  */
 
 // *Herencia* en extends
-public class Server extends Web{
+public class Server extends Web {
 
     static Vector<ClientHandler> ar = new Vector<>();
 
