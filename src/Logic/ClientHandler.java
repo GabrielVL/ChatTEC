@@ -3,24 +3,29 @@ package Logic;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 
-// ClientHandler class
+/**
+ * Clase que maneja varios pedidos de clientes
+ */
+
+// ClientHandler es una *clase*
 class ClientHandler  extends Web implements Runnable {
+
+    // *Encapsulación* en private
     private String name;
     final DataInputStream dis;
     final DataOutputStream dos;
     boolean isloggedin;
 
-    // constructor
+    // *Método* constructor de ClientHandler
     public ClientHandler(DataInputStream dis, DataOutputStream dos) {
         this.dis = dis;
         this.dos = dos;
-        this.isloggedin=true;
+        this.isloggedin = true;
     }
 
-    @Override
+    @Override // *Sobreescritura* del método run
     public void run() {
 
         String received;
@@ -28,55 +33,44 @@ class ClientHandler  extends Web implements Runnable {
         try {
             received = dis.readUTF();
             this.name = received;
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
 
-        while (true)
-        {
-            try
-            {
-                // receive the string
+        while (true) {
+            try {
                 received = dis.readUTF();
 
                 System.out.println(received);
 
-                if(received.equals("logout")){
+                if(received.equals("logout")) {
                     this.isloggedin=false;
                     this.s.close();
                     break;
                 }
 
-                // break the string into message and recipient part
                 StringTokenizer st = new StringTokenizer(received, "#");
                 String MsgToSend = st.nextToken();
                 String recipient = st.nextToken();
 
-                // search for the recipient in the connected devices list.
-                // ar is the vector storing client of active users
-                for (ClientHandler mc : Server.ar)
-                {
-                    // if the recipient is found, write on its
-                    // output stream
-                    if (mc.name.equals(recipient) && mc.isloggedin==true)
-                    {
+                for (ClientHandler mc : Server.ar) {
+
+                    if (mc.name.equals(recipient) && mc.isloggedin) {
                         mc.dos.writeUTF(this.name+" : "+MsgToSend);
                         break;
                     }
                 }
             } catch (IOException e) {
-
                 e.printStackTrace();
             }
 
         }
-        try
-        {
-            // closing resources
+        try {
+
             this.dis.close();
             this.dos.close();
 
-        }catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
     }
